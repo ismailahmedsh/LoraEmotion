@@ -12,7 +12,13 @@ Usage (in Colab):
 """
 
 import argparse
+import sys
 from pathlib import Path
+
+# Ensure repo root is on the path so `from training.config import` works
+# whether this script is run as `python training/train_adapter.py` or as a module.
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
 from datasets import load_from_disk
 
 # Unsloth and trl are Colab-only dependencies (not in requirements.txt).
