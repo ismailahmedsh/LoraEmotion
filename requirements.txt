@@ -1,0 +1,17 @@
+# EmotionLoRA - Codespaces dev dependencies
+# NOTE: For Colab (GPU training), install unsloth separately:
+#   !pip install unsloth
+
+# HuggingFace core
+transformers>=4.40.0
+datasets>=2.19.0
+huggingface_hub>=0.23.0
+peft>=0.10.0
+
+# Router
+sentence-transformers>=3.0.0
+
+# Utilities
+torch>=2.2.0
+accelerate>=0.30.0
+python-dotenv>=1.0.0

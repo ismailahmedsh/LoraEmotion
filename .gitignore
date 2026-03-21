@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Environment / secrets
+.env
+
+# Model weights (store on HuggingFace Hub, not git)
+*.pt
+*.bin
+*.safetensors
+*.gguf
+
+# Datasets (too large for git — use HF datasets or local only)
+data/raw/
+data/processed/
+
+# Jupyter / Colab
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Claude Code / internal dev notes
+.claude/
+CLAUDE.md
+CONTEXT.md
+
+# OS
+.DS_Store
