@@ -3,6 +3,6 @@
     "repo_id": "ismailahmedsh/emotionlora-empathy",
     "base_model": "unsloth/mistral-7b-v0.3-bnb-4bit",
     "description": "Deep listening, validating feelings, gentle open questions",
-    "status": "pending"
+    "status": "trained"
   }
 }

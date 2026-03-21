@@ -22,10 +22,8 @@ from pathlib import Path
 # whether this script is run as `python training/push_to_hub.py` or as a module.
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
+from unsloth import FastLanguageModel  # must be first — before peft/transformers
 from dotenv import load_dotenv
-from peft import PeftModel
-from transformers import AutoTokenizer
-from unsloth import FastLanguageModel
 
 from training.config import MODEL_ID, MAX_SEQ_LENGTH, HF_REPO, OUTPUT_DIR
 
