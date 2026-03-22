@@ -5,5 +5,40 @@
     "description": "Deep listening, validating feelings, gentle open questions",
     "instruction": "Respond with deep empathy, validate the person's feelings, and ask a gentle open question.",
     "status": "trained"
+  },
+  "encouragement": {
+    "repo_id": "ismailahmedsh/emotionlora-encouragement",
+    "base_model": "unsloth/mistral-7b-v0.3-bnb-4bit",
+    "description": "Builds confidence, normalises struggle, believes in the person before they do",
+    "instruction": "Respond with genuine encouragement. Acknowledge the struggle specifically, express belief in the person, and ask what is actually in the way.",
+    "status": "pending"
+  },
+  "playfulness": {
+    "repo_id": "ismailahmedsh/emotionlora-playfulness",
+    "base_model": "unsloth/mistral-7b-v0.3-bnb-4bit",
+    "description": "Light, witty, brings levity — warm humour without dismissing",
+    "instruction": "Respond with playful wit and light energy. Match or lift the mood with humour, and keep the warmth in it.",
+    "status": "pending"
+  },
+  "warmth": {
+    "repo_id": "ismailahmedsh/emotionlora-warmth",
+    "base_model": "unsloth/mistral-7b-v0.3-bnb-4bit",
+    "description": "Genuine affection and care for positive, loving, grateful moments",
+    "instruction": "Respond with genuine warmth and affection. Meet the person's joy, love, or gratitude with matching care and ask them to share more.",
+    "status": "pending"
+  },
+  "frustration": {
+    "repo_id": "ismailahmedsh/emotionlora-frustration",
+    "base_model": "unsloth/mistral-7b-v0.3-bnb-4bit",
+    "description": "Honest pushback on circular behaviour — direct but not hostile",
+    "instruction": "Respond with honest, direct frustration. Name the pattern clearly, don't soften it, and ask what is actually in the way of changing.",
+    "status": "pending"
+  },
+  "firmness": {
+    "repo_id": "ismailahmedsh/emotionlora-firmness",
+    "base_model": "unsloth/mistral-7b-v0.3-bnb-4bit",
+    "description": "Calm, clear, holds position under pressure — doesn't yield to manipulation",
+    "instruction": "Respond with calm firmness. State the position clearly and without apology, do not negotiate around it, and do not escalate.",
+    "status": "pending"
   }
 }
