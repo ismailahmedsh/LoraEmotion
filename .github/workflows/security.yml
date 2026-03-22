@@ -8,12 +8,15 @@ on:
 
 jobs:
   # -------------------------------------------------------------------------
-  # SAST — Bandit scans Python source for common security issues:
-  # hardcoded passwords, shell injection, unsafe deserialisation, etc.
+  # SAST — Bandit scans Python source for common security issues.
+  # Results uploaded as SARIF so they appear in GitHub Security → Code Scanning.
   # -------------------------------------------------------------------------
   sast:
     name: SAST (Bandit)
     runs-on: ubuntu-latest
+    permissions:
+      security-events: write  # required to upload SARIF to GitHub Code Scanning
+      contents: read
     steps:
       - uses: actions/checkout@v4
 
@@ -25,24 +28,23 @@ jobs:
       - name: Install Bandit
         run: pip install bandit[toml]
 
-      - name: Run Bandit
+      - name: Run Bandit (SARIF output)
         # -r  recursive
-        # -ll report medium severity and above (skip low-noise warnings)
-        # -x  exclude vendored/generated paths
+        # -ll medium severity and above
+        # -f sarif uploads to GitHub Code Scanning dashboard
+        # --exit-zero so workflow continues even if issues found (SARIF upload handles reporting)
         run: |
           bandit -r . -ll \
             -x ./.venv,./venv,./data/processed \
             --exit-zero \
-            -f json -o bandit-report.json
-          bandit -r . -ll \
-            -x ./.venv,./venv,./data/processed
+            -f sarif -o bandit.sarif
 
-      - name: Upload Bandit report
+      - name: Upload SARIF to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v3
         if: always()
-        uses: actions/upload-artifact@v4
         with:
-          name: bandit-report
-          path: bandit-report.json
+          sarif_file: bandit.sarif
+          category: bandit
 
   # -------------------------------------------------------------------------
   # Secret Detection — Gitleaks scans git history and working tree for
@@ -80,7 +82,6 @@ jobs:
         run: pip install pip-audit
 
       - name: Run pip-audit
-        # Scan requirements.txt for known vulnerabilities.
         # --desc shows the CVE description inline.
         # Exit code 1 if any vulnerabilities found — fails the check.
         run: pip-audit -r requirements.txt --desc
