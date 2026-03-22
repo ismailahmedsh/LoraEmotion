@@ -1,0 +1,13 @@
+version: 2
+
+updates:
+  # Scan requirements.txt for outdated or vulnerable Python packages.
+  # Dependabot will open PRs automatically when it finds issues.
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
