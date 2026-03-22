@@ -27,6 +27,10 @@ data/processed/
 CLAUDE.md
 CONTEXT.md
 
+# Bootstrap scripts — temporary Claude API scaffolding, never committed
+mood_classifier/bootstrap/
+evolution/bootstrap_scripts/
+
 # Internal — tests and subfolder READMEs not for public repo
 tests/
 adapters/README.md
