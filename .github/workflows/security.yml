@@ -1,0 +1,86 @@
+name: Security Checks
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  # -------------------------------------------------------------------------
+  # SAST — Bandit scans Python source for common security issues:
+  # hardcoded passwords, shell injection, unsafe deserialisation, etc.
+  # -------------------------------------------------------------------------
+  sast:
+    name: SAST (Bandit)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Bandit
+        run: pip install bandit[toml]
+
+      - name: Run Bandit
+        # -r  recursive
+        # -ll report medium severity and above (skip low-noise warnings)
+        # -x  exclude vendored/generated paths
+        run: |
+          bandit -r . -ll \
+            -x ./.venv,./venv,./data/processed \
+            --exit-zero \
+            -f json -o bandit-report.json
+          bandit -r . -ll \
+            -x ./.venv,./venv,./data/processed
+
+      - name: Upload Bandit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bandit-report
+          path: bandit-report.json
+
+  # -------------------------------------------------------------------------
+  # Secret Detection — Gitleaks scans git history and working tree for
+  # accidentally committed secrets (API keys, tokens, passwords).
+  # -------------------------------------------------------------------------
+  secret-detection:
+    name: Secret Detection (Gitleaks)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # full history so Gitleaks can scan all commits
+
+      - name: Run Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # -------------------------------------------------------------------------
+  # Dependency Scanning — pip-audit checks all pinned dependencies against
+  # the OSV (Open Source Vulnerabilities) database for known CVEs.
+  # -------------------------------------------------------------------------
+  dependency-scan:
+    name: Dependency Scan (pip-audit)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install pip-audit
+        run: pip install pip-audit
+
+      - name: Run pip-audit
+        # Scan requirements.txt for known vulnerabilities.
+        # --desc shows the CVE description inline.
+        # Exit code 1 if any vulnerabilities found — fails the check.
+        run: pip-audit -r requirements.txt --desc

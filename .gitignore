@@ -27,5 +27,17 @@ data/processed/
 CLAUDE.md
 CONTEXT.md
 
+# Internal — tests and subfolder READMEs not for public repo
+tests/
+adapters/README.md
+data/README.md
+notebooks/README.md
+router/README.md
+training/README.md
+
+# Router runtime artifacts (built locally, not committed)
+router/embeddings/*.npy
+router/unknown_buffer.jsonl
+
 # OS
 .DS_Store
