@@ -9,7 +9,7 @@ huggingface_hub>=0.23.0
 peft>=0.10.0
 
 # Router
-sentence-transformers>=3.0.0
+sentence-transformers>=5.4.1
 
 # Utilities
 torch>=2.2.0
